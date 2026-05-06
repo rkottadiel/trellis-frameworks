@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Stakeholder Message Drafter — Trellis Frameworks">
+  <section class="px-6 pt-16 pb-24">
+    <div class="max-w-2xl mx-auto">
+
+      <a href="/tools" class="text-sm text-brand-muted hover:text-brand-text transition-colors mb-8 inline-block">
+        ← Back to Tools
+      </a>
+
+      <p class="text-xs font-medium text-brand-accent uppercase tracking-wide mb-3">Free Tool</p>
+      <h1 class="text-3xl font-serif font-semibold text-brand-text mb-3">
+        Stakeholder Message Drafter
+      </h1>
+      <p class="text-brand-muted mb-10 leading-relaxed">
+        Describe your situation and we'll draft a clear, professional message for you to use or adapt.
+      </p>
+
+      <div class="space-y-6">
+
+        <div>
+          <label class="block text-sm font-medium text-brand-text mb-2">
+            Who is the audience?
+          </label>
+          <input
+            id="audience"
+            type="text"
+            placeholder="e.g. My manager, the engineering team, a difficult client"
+            class="w-full border border-brand-border rounded-md px-4 py-2.5 text-sm text-brand-text placeholder:text-brand-muted focus:outline-none focus:border-brand-accent"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-brand-text mb-2">
+            What is the situation?
+          </label>
+          <textarea
+            id="situation"
+            rows="3"
+            placeholder="e.g. I need to push back on a deadline without damaging the relationship"
+            class="w-full border border-brand-border rounded-md px-4 py-2.5 text-sm text-brand-text placeholder:text-brand-muted focus:outline-none focus:border-brand-accent resize-none"
+          ></textarea>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-brand-text mb-2">
+            What tone do you need?
+          </label>
+          <input
+            id="tone"
+            type="text"
+            placeholder="e.g. Direct but diplomatic, warm and collaborative, firm"
+            class="w-full border border-brand-border rounded-md px-4 py-2.5 text-sm text-brand-text placeholder:text-brand-muted focus:outline-none focus:border-brand-accent"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-brand-text mb-2">
+            What outcome do you want?
+          </label>
+          <input
+            id="outcome"
+            type="text"
+            placeholder="e.g. Agreement to extend the deadline by one week"
+            class="w-full border border-brand-border rounded-md px-4 py-2.5 text-sm text-brand-text placeholder:text-brand-muted focus:outline-none focus:border-brand-accent"
+          />
+        </div>
+
+        <button
+          id="submit-btn"
+          class="w-full bg-brand-accent text-white text-sm font-medium py-3 rounded-md hover:bg-[#235c43] transition-colors"
+        >
+          Draft my message →
+        </button>
+
+      </div>
+
+      <div id="result" class="hidden mt-10">
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-sm font-medium text-brand-text">Your drafted message</p>
+          <button
+            id="copy-btn"
+            class="text-xs text-brand-accent hover:text-brand-text transition-colors font-medium"
+          >
+            Copy to clipboard
+          </button>
+        </div>
+        <div
+          id="result-text"
+          class="border border-brand-border rounded-md px-4 py-4 text-sm text-brand-text leading-relaxed whitespace-pre-wrap"
+        ></div>
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const submitBtn = document.getElementById('submit-btn');
+  const resultDiv = document.getElementById('result');
+  const resultText = document.getElementById('result-text');
+  const copyBtn = document.getElementById('copy-btn');
+
+  submitBtn.addEventListener('click', async () => {
+    const audience = (document.getElementById('audience') as HTMLInputElement).value;
+    const situation = (document.getElementById('situation') as HTMLTextAreaElement).value;
+    const tone = (document.getElementById('tone') as HTMLInputElement).value;
+    const outcome = (document.getElementById('outcome') as HTMLInputElement).value;
+
+    if (!audience || !situation || !tone || !outcome) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    submitBtn.textContent = 'Drafting...';
+    submitBtn.setAttribute('disabled', 'true');
+
+    const response = await fetch('/api/generate-message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ audience, situation, tone, outcome }),
+    });
+
+    const data = await response.json();
+
+    resultText.textContent = data.message;
+    resultDiv.classList.remove('hidden');
+    submitBtn.textContent = 'Draft my message →';
+    submitBtn.removeAttribute('disabled');
+  });
+
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(resultText.textContent);
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = 'Copy to clipboard'; }, 2000);
+  });
+</script>
