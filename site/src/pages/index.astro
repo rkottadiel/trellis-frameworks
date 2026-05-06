@@ -1,11 +1,61 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Trellis Frameworks — Frameworks for PMs navigating the AI shift">
+
+  <!-- Hero -->
+  <section class="px-6 pt-24 pb-16">
+    <div class="max-w-4xl mx-auto">
+      <p class="text-sm font-medium text-brand-accent mb-4 tracking-wide uppercase">
+        For mid-career PMs and operators
+      </p>
+      <h1 class="text-4xl font-serif font-semibold tracking-tight text-brand-text leading-snug mb-6 max-w-2xl">
+        Frameworks for PMs navigating the AI shift.
+      </h1>
+      <p class="text-lg text-brand-muted max-w-xl mb-8 leading-relaxed">
+        Free tools and paid frameworks for product managers and operators in regulated and ecommerce industries. Practical. Structured. No hype.
+      </p>
+      <a href="/tools" class="inline-flex items-center gap-2 bg-brand-accent text-white text-sm font-medium px-5 py-2.5 rounded-md hover:bg-[#235c43] transition-colors">
+        Try the AI Readiness Tool →
+      </a>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="max-w-4xl mx-auto px-6">
+    <hr class="border-brand-border" />
+  </div>
+
+  <!-- Cards -->
+  <section class="px-6 py-16">
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <a href="/tools" class="block border border-brand-border rounded-lg p-6 hover:border-brand-accent transition-colors">
+        <p class="text-xs font-medium text-brand-accent uppercase tracking-wide mb-3">Free Tools</p>
+        <h2 class="text-base font-semibold text-brand-text mb-2">Interactive prompt generators</h2>
+        <p class="text-sm text-brand-muted leading-relaxed">
+          Form-based tools that generate structured prompts you run in ChatGPT or Claude. No account needed.
+        </p>
+      </a>
+
+      <a href="/writing" class="block border border-brand-border rounded-lg p-6 hover:border-brand-accent transition-colors">
+        <p class="text-xs font-medium text-brand-accent uppercase tracking-wide mb-3">Writing</p>
+        <h2 class="text-base font-semibold text-brand-text mb-2">Long-form for operators and PMs</h2>
+        <p class="text-sm text-brand-muted leading-relaxed">
+          Practical articles on AI integration, regulated ecommerce, and product management in complex orgs.
+        </p>
+      </a>
+
+      <a href="/frameworks" class="block border border-brand-border rounded-lg p-6 hover:border-brand-accent transition-colors">
+        <p class="text-xs font-medium text-brand-accent uppercase tracking-wide mb-3">Frameworks</p>
+        <h2 class="text-base font-semibold text-brand-text mb-2">Paid productized frameworks</h2>
+        <p class="text-sm text-brand-muted leading-relaxed">
+          Structured, downloadable frameworks for AI readiness, stakeholder communication, and regulated ops.
+        </p>
+      </a>
+
+    </div>
+  </section>
+
 </Layout>
